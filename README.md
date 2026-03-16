@@ -31,7 +31,9 @@ if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install(c("LEA", "ggtree", "SNPRelate"))
 ```
-## Load libraries in your script:
+
+## Load libraries in your script
+
 ```R
 library(vcfR)
 library(ggplot2)
@@ -48,43 +50,66 @@ library(SNPRelate)
 library(ggrepel)
 library(ape)
 ```
-## Load GAPIT functions:
+
+## Load GAPIT functions
+
 ```R
 source("http://zzlab.net/GAPIT/gapit_functions.txt")
 ```
+
 ## Usage
+
 ### 1.Input files
+
 - `snp_set.recode.vcf`: SNP dataset in VCF format
 - `trait.txt`: Phenotype data file with two columns (Sample and phenotype)
+
 ### 2.Phenotype histogram
+
 ```R
 ggplot(pheno.dat, aes(x = phenotype)) +
   geom_histogram(binwidth = 1, fill = "red", color = "black") +
   labs(title = "Histogram of Phenotype", x = "Phenotype Value", y = "Frequency") +
   theme_minimal()
 ```
+
 ### 3.Phylogenetic tree construction
+
 - Convert VCF to GDS
 - Generate IBS matrix
 - Cluster and visualize with ggtree
 - Export tree in Newick format
+
 ### 4.PCA analysis
+
 ```R
 pca <- snpgdsPCA(genofile, autosome.only=FALSE)
 # Visualize with ggplot2
 ```
+
 ### 5.GWAS using GAPIT
+
 - Convert VCF to HapMap format
 - Run `GAPIT` with FarmCPU model
+
+```R
+Rscript GAPIT.R
+or
+Rscript workshop_master.R
+```
+
 - Extract top SNPs and save CSV
 - Generate Manhattan and QQ plots using qqman
 
 ### 6.Chromosome-specific analysis
+
 ```R
 vcf.chr12 <- vcf[vcf@fix[,"CHROM"] == 12,]
 write.vcf(vcf.chr12, "tomato_chr12.vcf.gz")
 ```
+
 ## References
+
 - **GAPIT Manual**: [https://zzlab.net/GAPIT/gapit_help_document.pdf](https://zzlab.net/GAPIT/gapit_help_document.pdf)  
 - **GAPIT GitHub**: [https://github.com/jiabowang/GAPIT](https://github.com/jiabowang/GAPIT)  
 - **R SNPRelate**: [https://www.bioconductor.org/packages/release/bioc/html/SNPRelate.html](https://www.bioconductor.org/packages/release/bioc/html/SNPRelate.html)  
